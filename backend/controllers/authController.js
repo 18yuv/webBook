@@ -3,6 +3,7 @@ import userModel from '../models/user.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { sendVerificationEmail } from '../utils/sendVerificationEmail.js'
+import { setAuthCookie } from '../middlewares/cookie.js'
 
 export async function signupValidation(req, res) {
 
@@ -95,14 +96,7 @@ export async function loginValidation(req, res) {
         const expiresIn = '30m'
 
         const token = jwt.sign(payload, secret, { expiresIn })
-
-        res.cookie("token", token, {
-            httpOnly: true,
-            // secure: true,
-            // sameSite: "None",
-            path: "/",
-            maxAge: 30 * 60 * 1000
-        });
+        setAuthCookie(res, token)
 
         res.status(201).json({ message: "Login successful", success: true })
 

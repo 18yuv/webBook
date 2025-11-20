@@ -3,7 +3,7 @@ import { transporter } from "./nodemailer.js";
 
 export async function sendVerificationEmail(user) {
     const token = jwt.sign(
-        { id: user._id, email: user.email },
+        { id: user._id, name:user.name, email: user.email },
         process.env.EMAIL_VERIFY_SECRET,
         { expiresIn: "30m" }
     );
