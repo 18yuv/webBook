@@ -5,7 +5,7 @@ export async function sendVerificationEmail(user) {
     const token = jwt.sign(
         { id: user._id, name:user.name, email: user.email },
         process.env.EMAIL_VERIFY_SECRET,
-        { expiresIn: "30m" }
+        { expiresIn: "1h" }
     );
 
     const verifyURL = `${process.env.CLIENT_URL}/auth/verify-email/${token}`;

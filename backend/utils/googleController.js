@@ -11,6 +11,10 @@ passport.use(new GoogleStrategy({
     async (accessToken, refreshToken, profile, done) => {
         try {
 
+            if (!profile.emails || !profile.emails[0]) {
+                return done(new Error('No email found from Google'), null);
+            }
+
             let user = await userModel.findOne({ email: profile.emails[0].value });
 
             if (!user) {
@@ -22,11 +26,11 @@ passport.use(new GoogleStrategy({
                 });
                 await user.save();
             }
-            
-            const payload = { id: user.id, name: user.name, email: user.email };
-            const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '30m' });
 
-            done(null, { user, token });
+            const payload = { id: user.id, name: user.name, email: user.email };
+            const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+            return done(null, { user, token });
         } catch (err) {
             done(err, null);
         }

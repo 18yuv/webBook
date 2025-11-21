@@ -46,8 +46,7 @@ export async function signupValidation(req, res) {
         res.status(201).json({ message: "signup successful", success: true })
 
     } catch (err) {
-        console.error(err);
-        return res.status(500).json({ message: 'Registration failed. Please try again.'})
+        return res.status(500).json({ message: 'Registration failed. Please try again.' })
     }
 
 }
@@ -79,6 +78,11 @@ export async function loginValidation(req, res) {
             return res.status(400).json({ message: 'User does not exist, Please SignUp!' });
         }
 
+        if (user.password === null) {
+            return res.status(400).json({message: "This account uses Google login. Please log in with Google."});
+        }
+
+
         const isPassValid = await bcrypt.compare(password, user.password)
         if (!isPassValid) {
             return res.status(400).json({ message: "Entered password is wrong" })
@@ -93,7 +97,7 @@ export async function loginValidation(req, res) {
 
         const payload = { id: user.id, name: user.name, email: user.email }
         const secret = process.env.JWT_SECRET
-        const expiresIn = '30m'
+        const expiresIn = '1h'
 
         const token = jwt.sign(payload, secret, { expiresIn })
         setAuthCookie(res, token)

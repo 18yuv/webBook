@@ -26,6 +26,6 @@ export async function resendVerification(req, res) {
         });
 
     } catch (err) {
-        return res.status(500).json({ message: "Could not resend verification email", err });
+        return res.status(500).json({ message: "Could not resend verification email"});
     }
 }

@@ -1,10 +1,12 @@
 import express from 'express'
 import cors from 'cors'
 import 'dotenv/config';
+import passport from 'passport';
 import authRouter from './routes/auth.js';
 import connectMongo from './models/connection.js';
 import homeRouter from './routes/home.js';
 import cookieParser from 'cookie-parser';
+import './utils/googleController.js';
 await connectMongo();
 
 const app = express()
@@ -17,6 +19,7 @@ app.use(cors({
   credentials: true
 }));
 app.use(cookieParser())
+app.use(passport.initialize());
 
 
 app.use('/auth', authRouter)

@@ -16,7 +16,7 @@ const userSchema = new Schema({
     password: {
         type: String,
         default: null,
-        required: true
+        required: false
     },
     verified: {
         type: Boolean,
