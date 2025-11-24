@@ -23,10 +23,13 @@ export async function signupValidation(req, res) {
         email: Joi.string().required().trim().email().lowercase(),
         password: Joi.string().required().min(6).max(20).pattern(passwordPattern).messages(passErrMessage)
     })
-    const { error } = JoiSchema.validate(req.body)
+    const { error } = JoiSchema.validate(req.body, { abortEarly: false })
 
     if (error) {
-        return res.status(400).json({ message: error.details[0].message });
+        return res.status(400).json({
+            message: "Validation failed",
+            errors: error.details.map(d => d.message)
+        });
     }
 
     try {
@@ -66,10 +69,13 @@ export async function loginValidation(req, res) {
         email: Joi.string().trim().email().required(),
         password: Joi.string().required().min(6).max(20).pattern(passwordPattern).messages(passErrMessage)
     })
-    const { error } = JoiSchema.validate(req.body)
+    const { error } = JoiSchema.validate(req.body, { abortEarly: false })
 
     if (error) {
-        return res.status(400).json({ message: "Bad Request", error })
+        return res.status(400).json({
+            message: "Validation failed",
+            errors: error.details.map(d => d.message)
+        });
     }
 
     try {
@@ -79,7 +85,7 @@ export async function loginValidation(req, res) {
         }
 
         if (user.password === null) {
-            return res.status(400).json({message: "This account uses Google login. Please log in with Google."});
+            return res.status(400).json({ message: "This account uses Google login. Please log in with Google." });
         }
 
 
@@ -105,7 +111,7 @@ export async function loginValidation(req, res) {
         res.status(201).json({ message: "Login successful", success: true })
 
     } catch (err) {
-        return res.status(500).json({ message: 'Login failed. Please try again.', err })
+        return res.status(500).json({ message: 'Login failed. Please try again.' })
     }
 }
 

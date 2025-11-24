@@ -17,10 +17,13 @@ export async function setPassword(req, res) {
     const JoiSchema = Joi.object({
         newPassword: Joi.string().required().min(6).max(20).pattern(passwordPattern).messages(passErrMessage)
     })
-    const { error } = JoiSchema.validate({newPassword})
-
+    const { error } = JoiSchema.validate({ newPassword }, { abortEarly: false })
+    
     if (error) {
-        return res.status(400).json({ message: error.details[0].message });
+        return res.status(400).json({
+            message: "Validation failed",
+            errors: error.details.map(d => d.message)
+        });
     }
     try {
         const hashed = await bcrypt.hash(newPassword, 10);
@@ -32,6 +35,6 @@ export async function setPassword(req, res) {
         return res.status(200).json({ message: "Password set successfully." });
     }
     catch (err) {
-        return res.status(500).json({ message: 'Error setting password'});
+        return res.status(500).json({ message: 'Error setting password' });
     }
 }
