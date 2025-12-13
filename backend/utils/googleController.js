@@ -8,7 +8,7 @@ passport.use(new GoogleStrategy({
     clientSecret: process.env.GMAIL_CLIENT_SECRET,
     callbackURL: "/auth/google/callback"
 },
-    async (accessToken, refreshToken, profile, done) => {
+    async ( profile, done) => {
         try {
 
             if (!profile.emails || !profile.emails[0]) {

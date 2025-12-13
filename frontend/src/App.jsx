@@ -1,3 +1,4 @@
+import { Toaster } from "react-hot-toast";
 import { Routes, Route } from "react-router-dom";
 import Login from "./pages/login.jsx";
 import Home from "./pages/Home.jsx";
@@ -8,6 +9,7 @@ function App() {
 
   return (
     <>
+      <Toaster position="top-right" />
       <Routes>
         <Route index element={<Home />} />
         <Route path="/login" element={<Login />} />

@@ -1,7 +1,73 @@
-export default function Home() {
+import { Link } from 'react-router-dom'
+import { useForm } from "react-hook-form"
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import api from '../api/axios.js';
+import GoogleLoginButton from '../components/GoogleLogin.jsx';
+
+export default function Signup() {
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors, isSubmitting }
+    } = useForm()
+
+    const navigate = useNavigate();
+    async function onSubmit(data) {
+        try {
+            const response = await api.post("/auth/signup", data)
+            console.log("Success:", response.data);
+            toast.success("Verification email sent. Please check your inbox.");
+            setTimeout(() => { navigate("/login"); }, 4000);
+        } catch (error) {
+            console.error("Error:", error.response?.data || error.message || "Signup Failed");
+        }
+    }
+
     return (
         <>
+            <h1>Signup</h1>
+            <form onSubmit={handleSubmit(onSubmit)} >
 
+                <label htmlFor="name">Name</label>
+
+                <input id="name" {...register("name", {
+                    required: { value: true, message: "Name is required" }
+                })} type="text" placeholder='Will Smith' title='Name' />
+                {errors.name && <span>{errors.name.message}</span>}
+
+                <label htmlFor="email">Email</label>
+
+                <input id="email" {...register("email", {
+                    required: { value: true, message: "Email is required" },
+                    pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Enter a valid email address" },
+                })} type="email" placeholder='will@email.com' title='Email' />
+                {errors.email && <span>{errors.email.message}</span>}
+
+                <label htmlFor="password">Password</label>
+
+                <input id="password" {...register("password", {
+                    required: { value: true, message: "Password is required" },
+                    pattern: { value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])/, message: "Password must include uppercase, lowercase, number, and special Character" },
+                    minLength: { value: 6, message: "Password must be at least 6 characters long" },
+                    maxLength: { value: 20, message: "Password cannot exceed 20 characters" }
+                })}
+                    type="password" placeholder='Password' title='Password must be 6-20 characters' />
+                {errors.password && <span>{errors.password.message}</span>}
+
+                <button disabled={isSubmitting}>
+                    {isSubmitting ? "Signing in..." : "Submit"}
+                </button>
+
+{/* 
+                {isSubmitSuccessful && (
+                    <p> "We've sent a verification email. Please verify your account before logging in."</p>
+                )} */}
+            </form>
+
+            <p>Already exists? <Link to='/login'>Login</Link></p>
+            <GoogleLoginButton />
         </>
     )
 }

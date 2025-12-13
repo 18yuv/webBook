@@ -26,7 +26,6 @@ authRouter.post('/request-password-reset', authLimiter, requestPasswordReset);
 authRouter.post('/reset-password', authLimiter, resetPassword);
 
 // google verification
-authRouter.post("/set-password", authLimiter, ensureAuth, setPassword);
 authRouter.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 authRouter.get('/google/callback', 
     passport.authenticate('google', { session: false, failureRedirect: '/login' }),
@@ -35,5 +34,6 @@ authRouter.get('/google/callback',
         return res.status(201).json({ message: "Login successful", success: true })
     }
 );
+authRouter.post("/set-password", authLimiter, ensureAuth, setPassword);
 
 export default authRouter;
