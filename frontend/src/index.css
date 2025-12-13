@@ -1,0 +1,12 @@
+html {
+    scroll-behavior: smooth;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    font-family: "Inter", "Source Code Pro", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
