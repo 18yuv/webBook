@@ -1,9 +1,11 @@
-import { Link } from 'react-router-dom'
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from '../api/axios.js';
 import GoogleLoginButton from '../components/GoogleLogin.jsx';
+import { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 export default function Signup() {
 
@@ -13,14 +15,18 @@ export default function Signup() {
         formState: { errors, isSubmitting }
     } = useForm()
 
+    const [serverMsg, setServerMsg] = useState(null)
+
     const navigate = useNavigate();
     async function onSubmit(data) {
         try {
             const response = await api.post("/auth/signup", data)
-            console.log("Success:", response.data);
             toast.success("Verification email sent. Please check your inbox.");
-            setTimeout(() => { navigate("/login"); }, 4000);
+            setServerMsg("Verification email sent. Please check your inbox.")
+            setTimeout(() => { navigate("/login") }, 4000);
         } catch (error) {
+            toast.error(error.response?.data?.message || "Signup failed");
+            setServerMsg(error.response?.data?.message || error.message || "Signup Failed")
             console.error("Error:", error.response?.data || error.message || "Signup Failed");
         }
     }
@@ -28,6 +34,7 @@ export default function Signup() {
     return (
         <>
             <h1>Signup</h1>
+            {serverMsg && <p>{serverMsg}</p>}
             <form onSubmit={handleSubmit(onSubmit)} >
 
                 <label htmlFor="name">Name</label>
@@ -57,16 +64,12 @@ export default function Signup() {
                 {errors.password && <span>{errors.password.message}</span>}
 
                 <button disabled={isSubmitting}>
-                    {isSubmitting ? "Signing in..." : "Submit"}
+                    {isSubmitting ? (<>Signing up...<FontAwesomeIcon icon={faSpinner} spinPulse /></>) : "Submit"}
                 </button>
-
-{/* 
-                {isSubmitSuccessful && (
-                    <p> "We've sent a verification email. Please verify your account before logging in."</p>
-                )} */}
             </form>
 
             <p>Already exists? <Link to='/login'>Login</Link></p>
+            <p>Forgot Password?<Link to='/request-reset-password'>Reset Password</Link></p>
             <GoogleLoginButton />
         </>
     )
