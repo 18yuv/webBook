@@ -9,15 +9,15 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 export default function Signup() {
 
+    const [serverMsg, setServerMsg] = useState(null)
+    const navigate = useNavigate();
+
     const {
         register,
         handleSubmit,
         formState: { errors, isSubmitting }
     } = useForm()
 
-    const [serverMsg, setServerMsg] = useState(null)
-
-    const navigate = useNavigate();
     async function onSubmit(data) {
         try {
             const response = await api.post("/auth/signup", data)
@@ -64,13 +64,14 @@ export default function Signup() {
                 {errors.password && <span>{errors.password.message}</span>}
 
                 <button disabled={isSubmitting}>
-                    {isSubmitting ? (<>Signing up...<FontAwesomeIcon icon={faSpinner} spinPulse /></>) : "Submit"}
+                    {isSubmitting ? (<>Signing up...<FontAwesomeIcon icon={faSpinner} spinPulse /></>) : "Submit" }
                 </button>
             </form>
 
-            <p>Already exists? <Link to='/login'>Login</Link></p>
-            <p>Forgot Password?<Link to='/request-reset-password'>Reset Password</Link></p>
             <GoogleLoginButton />
+            <p>Already exists? <Link to='/login'>Login</Link></p>
+            <p><Link to="/resend-verification">Resend Verification Email?</Link></p>
+            <p>Forgot Password? <Link to='/request-password-reset'>Reset Password</Link></p>
         </>
     )
 }

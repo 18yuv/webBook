@@ -5,6 +5,7 @@ import Home from "./pages/Home.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import ReqResetPass from "./pages/ReqResetPass.jsx";
+import ResendVerification from "./pages/ResendVerification.jsx";
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
         <Route path="/request-password-reset" element={<ReqResetPass />} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/resend-verification" element={<ResendVerification />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

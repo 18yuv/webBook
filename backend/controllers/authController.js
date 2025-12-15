@@ -99,6 +99,7 @@ export async function loginValidation(req, res) {
                 message: "Email is not verified",
                 resend: true
             });
+            
         }
 
         const payload = { id: user.id, name: user.name, email: user.email }

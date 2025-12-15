@@ -18,8 +18,8 @@ authRouter.post('/login', authLimiter, loginValidation);
 authRouter.post('/logout', logoutController);
 
 // Email verification
-authRouter.get('/verify-email/:token', checkverification);
 authRouter.post('/resend-verification', authLimiter, resendVerification);
+authRouter.get('/verify-email/:token', checkverification);
 
 // reset password
 authRouter.post('/request-password-reset', authLimiter, requestPasswordReset);
