@@ -70,8 +70,6 @@ export default function Signup() {
 
             <GoogleLoginButton />
             <p>Already exists? <Link to='/login'>Login</Link></p>
-            <p><Link to="/resend-verification">Resend Verification Email?</Link></p>
-            <p>Forgot Password? <Link to='/request-password-reset'>Reset Password</Link></p>
         </>
     )
 }
