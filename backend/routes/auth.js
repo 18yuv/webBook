@@ -31,7 +31,7 @@ authRouter.get('/google/callback',
     passport.authenticate('google', { session: false, failureRedirect: '/login' }),
     (req, res) => {
         setAuthCookie(res, req.user.token);
-        return res.status(201).json({ message: "Login successful", success: true })
+        res.redirect("http://localhost:5173/dashboard");
     }
 );
 authRouter.post("/set-password", authLimiter, ensureAuth, setPassword);
