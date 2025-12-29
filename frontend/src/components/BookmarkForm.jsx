@@ -17,7 +17,8 @@ export default function BookmarkForm({ onCreated }) {
     try {
       await createBookmark({
         ...form,
-        tags: form.tags.split(",").map(t => t.trim())
+        tags: form.tags ? form.tags.split(",").map(t => t.trim().toLowerCase()) : []
+
       });
       setForm({ title: "", url: "", tags: "" });
       onCreated();

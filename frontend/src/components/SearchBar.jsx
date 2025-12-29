@@ -5,17 +5,16 @@ export default function SearchBar({ onSearch }) {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    onSearch(query);
+    onSearch(query.trim());
   };
 
   return (
-    <form onSubmit={handleSearch}>
+    <form className="search-bar" onSubmit={handleSearch}>
       <input
-        placeholder="Search by title or tag..."
+        placeholder="Search bookmarks by title or tag..."
         value={query}
         onChange={e => setQuery(e.target.value)}
       />
-      <button>Search</button>
     </form>
   );
 }
