@@ -26,7 +26,7 @@ authRouter.get('/verify-email/:token', checkverification);
 
 // reset password
 authRouter.post('/request-password-reset', authLimiter, requestPasswordReset);
-authRouter.post('/reset-password', authLimiter, resetPassword);
+authRouter.post('/reset-password/:token', authLimiter, resetPassword);
 
 // google verification
 authRouter.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));

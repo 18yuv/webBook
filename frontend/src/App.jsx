@@ -5,20 +5,20 @@ import Home from "./pages/Home.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import NotFound from "./pages/NotFound.jsx";
-import ReqResetPass from "./pages/ReqResetPass.jsx";
-import ResendVerification from "./pages/ResendVerification.jsx";
+import Navbar from "./components/Navbar.jsx";
+import ResetPassword from "./pages/ResetPassword.jsx";
 
 function App() {
 
   return (
     <>
       <Toaster position="top-right" />
+      <Navbar />
       <Routes>
         <Route index element={<Home />} />
-        <Route path="/request-password-reset" element={<ReqResetPass />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={ <ProtectedRoute> <Dashboard /> </ProtectedRoute> }/>
-        <Route path="/resend-verification" element={<ResendVerification />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
+        <Route path="/dashboard" element={<ProtectedRoute> <Dashboard /> </ProtectedRoute>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

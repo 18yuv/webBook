@@ -8,7 +8,7 @@ export async function sendPasswordResetEmail(user) {
         { expiresIn: "15m" }
     );
 
-    const verifyURL = `${process.env.CLIENT_URL}/auth/reset-password/${token}`;
+    const verifyURL = `${process.env.CLIENT_URL}/reset-password/${token}`;
 
     await transporter.sendMail({
         to: user.email,

@@ -1,28 +1,52 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext.jsx";
+import bookmarkLogo from "../assets/bookmark.svg";
 
 export default function Navbar() {
-  const { isLoggedIn, logout } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogout = async () => {
+  async function handleLogout() {
     await logout();
     navigate("/login");
-  };
+  }
 
   return (
-    <nav>
-      {isLoggedIn ? (
-        <>
-          <Link to="/dashboard">Dashboard</Link>
-          <button onClick={handleLogout}>Logout</button>
-        </>
-      ) : (
-        <>
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Signup</Link>
-        </>
-      )}
-    </nav>
+    <header className="navbar">
+      <div className="navbar-inner">
+        {/* Left */}
+        <Link to="/" className="navbar-logo">
+          <img src={bookmarkLogo} alt="WebBook" />
+          <span>WebBook</span>
+        </Link>
+
+        {/* Right */}
+        <nav className="navbar-actions">
+          {user ? (
+            <>
+              <Link to="/dashboard" className="nav-link">
+                Dashboard
+              </Link>
+
+              <button
+                className="nav-button"
+                onClick={handleLogout}
+              >
+                Log out
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to="/login" className="nav-link">
+                Log in
+              </Link>
+              <Link to="/" className="nav-button primary">
+                Sign up
+              </Link>
+            </>
+          )}
+        </nav>
+      </div>
+    </header>
   );
 }

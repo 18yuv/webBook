@@ -4,7 +4,8 @@ import Joi from "joi";
 import userModel from "../models/user.js";
 
 export async function resetPassword(req, res) {
-    const { token, newPassword } = req.body;
+    const { token } = req.params;
+    const { newPassword } = req.body;
 
     if (!token || !newPassword) {
         return res.status(400).json({ message: "New Password or token is missing" });
@@ -18,8 +19,8 @@ export async function resetPassword(req, res) {
     const JoiSchema = Joi.object({
         newPassword: Joi.string().required().min(6).max(20).pattern(passwordPattern).messages(passErrMessage)
     })
-    
-    const { error } = JoiSchema.validate({ newPassword }, {abortEarly: false})
+
+    const { error } = JoiSchema.validate({ newPassword }, { abortEarly: false })
 
     if (error) {
         return res.status(400).json({

@@ -8,11 +8,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import bookmarkLogo from "../assets/bookmark.svg"
 import { resendVerification } from "../api/auth.js";
+import { requestPasswordReset } from "../api/auth.js"
 
 export default function Login() {
   const navigate = useNavigate();
   const [serverMsg, setServerMsg] = useState(null);
   const [canResend, setCanResend] = useState(false);
+  const [isResending, setIsResending] = useState(false);
+  const [isResetting, setIsResetting] = useState(false);
   const { login } = useAuth();
 
   const {
@@ -48,13 +51,37 @@ export default function Login() {
         toast.error("Please enter your email first");
         return;
       }
-
+      setIsResending(true);
       await resendVerification({ email });
       toast.success("Verification email sent!");
       setCanResend(false);
       setServerMsg(null);
     } catch (err) {
       toast.error(err.response?.data?.message || "Failed to resend verification email");
+      setServerMsg(err.response?.data?.message || "Failed to resend verification email");
+    } finally {
+      setIsResending(false);
+    }
+  };
+
+  async function passReset() {
+    try {
+      const email = getValues("email");
+
+      if (!email) {
+        toast.error("Please enter your email first");
+        return;
+      }
+      setIsResetting(true);
+      await requestPasswordReset({ email });
+      toast.success("Password reset email sent!");
+      setServerMsg(null);
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Failed to send reset email");
+      setServerMsg(err.response?.data?.message || "Failed to send reset email");
+      console.log(err)
+    } finally {
+      setIsResetting(false);
     }
   };
 
@@ -107,7 +134,19 @@ export default function Login() {
         </p>
 
         <p className="auth-footer small">
-          <Link to="/request-password-reset">Forgot password?</Link>
+          Forgot Password?{" "}
+          <button
+            type="button"
+            onClick={passReset}
+            className="link-button"
+            disabled={isResetting}
+          >
+            {isResetting ? (
+              <>Sending… <FontAwesomeIcon icon={faSpinner} spinPulse /></>
+            ) : (
+              "Reset Password"
+            )}
+          </button>
         </p>
 
         {canResend && (
@@ -117,8 +156,13 @@ export default function Login() {
               type="button"
               onClick={handleResend}
               className="link-button"
+              disabled={isResending}
             >
-              Resend verification email
+              {isResending ? (
+                <>Resending… <FontAwesomeIcon icon={faSpinner} spinPulse /></>
+              ) : (
+                "Resend verification email"
+              )}
             </button>
           </p>
         )}
