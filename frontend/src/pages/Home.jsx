@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import GoogleLoginButton from "../components/GoogleLogin.jsx";
 import { signup } from "../api/auth.js";
+import bookmarkLogo from "../assets/bookmark.svg"
 
 export default function Signup() {
 
@@ -33,7 +34,7 @@ export default function Signup() {
     return (
         <div className="auth-page">
             <div className="auth-card">
-                <h1><i>WebBook</i></h1>
+                <h1 className="bookmark-logo" ><i>WebBook<img src={bookmarkLogo} alt="Google logo" className="google-icon" /></i></h1>
                 <h2>Create account</h2>
 
                 {serverMsg && <p className="auth-message">{serverMsg}</p>}

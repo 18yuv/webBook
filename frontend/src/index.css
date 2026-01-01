@@ -335,3 +335,33 @@ textarea {
   width: 18px;
   height: 18px;
 }
+
+.bookmark-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bookmark-logo i {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.bookmark-logo img {
+  width: 25px;
+  height: 25px;
+}
+
+.link-button {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--primary);
+  font: inherit;
+  cursor: pointer;
+}
+
+.link-button:hover {
+  text-decoration: underline;
+}
