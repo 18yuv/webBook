@@ -12,3 +12,6 @@ export const resetPassword = (token, data) => api.post(`/auth/reset-password/${t
 
 // User 
 export const getMe = () => api.get("/home/me");
+
+// google accounts
+export const setPassword = (data) => api.post("/auth/set-password", data);

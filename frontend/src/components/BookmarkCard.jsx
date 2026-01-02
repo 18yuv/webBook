@@ -1,14 +1,20 @@
 import { useState } from "react";
 import BookmarkEditModal from "./BookmarkEditModal";
 import { deleteBookmark } from "../api/bookmarks.js";
+import toast from "react-hot-toast";
 
 export default function BookmarkCard({ bookmark, onChange }) {
   const [editing, setEditing] = useState(false);
 
   const handleDelete = async () => {
     if (!window.confirm("Delete this bookmark?")) return;
-    await deleteBookmark(bookmark._id);
-    onChange();
+    try {
+      await deleteBookmark(bookmark._id);
+      onChange();
+      toast.success("Bookmark Deleted!")
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Failed to Delete")
+    }
   };
 
   return (

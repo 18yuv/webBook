@@ -7,6 +7,7 @@ import Dashboard from "./pages/Dashboard.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import Navbar from "./components/Navbar.jsx";
 import ResetPassword from "./pages/ResetPassword.jsx";
+import SetPassword from "./pages/SetPassword.jsx";
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/dashboard" element={<ProtectedRoute> <Dashboard /> </ProtectedRoute>} />
+        <Route path="/set-password" element={<ProtectedRoute> <SetPassword /> </ProtectedRoute>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

@@ -18,7 +18,7 @@ export async function setPassword(req, res) {
         newPassword: Joi.string().required().min(6).max(20).pattern(passwordPattern).messages(passErrMessage)
     })
     const { error } = JoiSchema.validate({ newPassword }, { abortEarly: false })
-    
+
     if (error) {
         return res.status(400).json({
             message: "Validation failed",
@@ -26,6 +26,13 @@ export async function setPassword(req, res) {
         });
     }
     try {
+        const user = await userModel.findById(req.user.id).select('+password'); // include password
+        if (user.password) {
+            return res.status(400).json({
+                message: "Password already exists. Use Reset password instead."
+            });
+        }
+
         const hashed = await bcrypt.hash(newPassword, 10);
 
         await userModel.findByIdAndUpdate(req.user.id, {

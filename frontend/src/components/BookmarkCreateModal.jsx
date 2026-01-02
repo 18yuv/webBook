@@ -1,14 +1,27 @@
 import { useState } from "react";
-import { createBookmark } from "../api/bookmarks";
+import { createBookmark } from "../api/bookmarks.js";
+import toast from "react-hot-toast";
 
 export default function BookmarkCreateModal({ onClose, onCreated }) {
-    const [form, setForm] = useState({
-        title: "",
-        url: "",
-        description: "",
-        tags: ""
-    });
+    const initialForm = { title: "", url: "", description: "", tags: "" };
+    const [form, setForm] = useState(initialForm);
     const [error, setError] = useState("");
+    
+    const hasUnsavedChanges = () => {
+        // Check if any form field is different from initial
+        return Object.keys(initialForm).some(key => form[key].trim() !== initialForm[key].trim());
+    };
+
+    const handleClose = () => {
+        if (hasUnsavedChanges()) {
+            const confirmClose = window.confirm(
+                "You have unsaved changes. Are you sure you want to close?"
+            );
+            if (!confirmClose) return;
+        }
+        onClose();
+    };
+
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -30,14 +43,16 @@ export default function BookmarkCreateModal({ onClose, onCreated }) {
             await createBookmark(payload);
             onCreated();
             onClose();
+            toast.success("Bookmark Created successfully!")
         } catch (err) {
+            toast.error(err.response?.data?.message || "Failed to create bookmark")
             setError(err.response?.data?.message || "Failed to create bookmark");
         }
     }
 
     return (
-        <div className="modal-backdrop">
-            <form className="modal" onSubmit={handleSubmit}>
+        <div className="modal-backdrop" onClick={handleClose}>
+            <form className="modal" onSubmit={handleSubmit} onClick={e => e.stopPropagation()}>
                 <h3>New Bookmark</h3>
 
                 <input
@@ -67,7 +82,7 @@ export default function BookmarkCreateModal({ onClose, onCreated }) {
                 {error && <p className="error">{error}</p>}
 
                 <div className="modal-actions">
-                    <button type="button" onClick={onClose}>
+                    <button type="button" onClick={handleClose}>
                         Cancel
                     </button>
                     <button className="primary">Save</button>

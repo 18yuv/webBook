@@ -1,14 +1,20 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 import bookmarkLogo from "../assets/bookmark.svg";
+import toast from "react-hot-toast";
 
 export default function Navbar() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   async function handleLogout() {
-    await logout();
-    navigate("/login");
+    try {
+      await logout();
+      navigate("/login");
+      toast.success("Logout Successful!")
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Error, Try again!")
+    }
   }
 
   return (
@@ -28,6 +34,12 @@ export default function Navbar() {
                 Dashboard
               </Link>
 
+              {/* Google login */}
+              {!user?.hasPassword && (
+                <Link to="/set-password" className="nav-link">
+                  Set password
+                </Link>
+              )}
               <button
                 className="nav-button"
                 onClick={handleLogout}
