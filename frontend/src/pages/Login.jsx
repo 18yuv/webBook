@@ -37,7 +37,6 @@ export default function Login() {
       } else {
         setCanResend(false);
       }
-      console.log(error)
       toast.error(error.response?.data?.message || "Login failed");
       setServerMsg(error.response?.data?.message || "Login failed");
     }
@@ -79,7 +78,6 @@ export default function Login() {
     } catch (err) {
       toast.error(err.response?.data?.message || "Failed to send reset email");
       setServerMsg(err.response?.data?.message || "Failed to send reset email");
-      console.log(err)
     } finally {
       setIsResetting(false);
     }

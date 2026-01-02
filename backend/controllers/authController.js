@@ -99,7 +99,7 @@ export async function loginValidation(req, res) {
                 message: "Email is not verified",
                 resend: true
             });
-            
+
         }
 
         const payload = { id: user.id, name: user.name, email: user.email }
@@ -118,7 +118,10 @@ export async function loginValidation(req, res) {
 
 export const logoutController = (req, res) => {
     res.clearCookie('token', {
-        httpOnly: true
+        httpOnly: true,
+        secure: true,
+        sameSite: 'none',
+        path: '/',
     });
 
     res.status(200).json({ message: 'Logged out successfully', success: true });
