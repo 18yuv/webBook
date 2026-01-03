@@ -43,10 +43,22 @@ export async function signupValidation(req, res) {
 
         await user.save()
 
-        // verification email
-        await sendVerificationEmail(user);
+        try {
+            // send email 
+            await sendVerificationEmail(user);
+            return res.status(201).json({
+                message: "Signup successful. Please check your email to verify.",
+                success: true
+            })
+        } catch (emailErr) {
+            console.error('Email failed:', emailErr);
 
-        res.status(201).json({ message: "signup successful", success: true })
+            return res.status(201).json({
+                message: "Account created! Failed to send Verfication email, Please use 'Resend verification' on the login page.",
+                success: true,
+                emailFailed: true
+            })
+        }
 
     } catch (err) {
         return res.status(500).json({ message: 'Registration failed. Please try again.' })
