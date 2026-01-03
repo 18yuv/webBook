@@ -13,12 +13,13 @@ await connectMongo();
 const app = express()
 const PORT = process.env.PORT
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+app.set('trust proxy', 1);
 app.use(cors({
   origin: process.env.CLIENT_URL,
   credentials: true
 }));
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
 app.use(passport.initialize())
 
