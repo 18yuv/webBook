@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken';
 passport.use(new GoogleStrategy({
     clientID: process.env.GMAIL_CLIENT_ID,
     clientSecret: process.env.GMAIL_CLIENT_SECRET,
-    callbackURL: "/auth/google/callback"
+    callbackURL: `${process.env.API_URL}/auth/google/callback`
 },
     async (accessToken, refreshToken, profile, done) => {
         try {
