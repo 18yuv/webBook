@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { transporter } from "./nodemailer.js";
+import { resend } from "./mailService.js";
 
 export async function sendPasswordResetEmail(user) {
     const token = jwt.sign(
@@ -7,16 +7,17 @@ export async function sendPasswordResetEmail(user) {
         process.env.JWT_RESET_SECRET,
         { expiresIn: "15m" }
     );
-
+    
     const verifyURL = `${process.env.CLIENT_URL}/reset-password/${token}`;
-
-    await transporter.sendMail({
+    
+    await resend.emails.send({
+        from: process.env.EMAIL_FROM,
         to: user.email,
         subject: "Reset your password",
         html: `
-            <p>You requested to reset your password.</p>
-            <p><a href="${verifyURL}">Click here to reset your password</a></p>
-            <p>This link expires in 15 minutes.</p>
+        <p>You requested to reset your password.</p>
+        <p><a href="${verifyURL}">Click here to reset your password</a></p>
+        <p>This link expires in 15 minutes.</p>
         `
     });
 }

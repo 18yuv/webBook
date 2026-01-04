@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { transporter } from "./nodemailer.js";
+import { resend } from "./mailService.js";
 
 export async function sendVerificationEmail(user) {
     const token = jwt.sign(
@@ -7,12 +7,12 @@ export async function sendVerificationEmail(user) {
         process.env.EMAIL_VERIFY_SECRET,
         { expiresIn: "1h" }
     );
-
+    
     const verifyURL = `${process.env.CLIENT_URL}/auth/verify-email/${token}`;
-
+    
     try {
-        await transporter.sendMail({
-            from: `"WebBook" <${process.env.EMAIL_USER}>`,
+        await resend.emails.send({
+            from: process.env.EMAIL_FROM,
             to: user.email,
             subject: "Verify Your Email",
             html: `

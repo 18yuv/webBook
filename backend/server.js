@@ -6,7 +6,7 @@ import authRouter from './routes/auth.js';
 import connectMongo from './models/connection.js';
 import homeRouter from './routes/home.js';
 import cookieParser from 'cookie-parser';
-import './utils/googleController.js';
+import './utils/googleStrategy.js';
 import bookmarkRouter from './routes/bookmarkRoute.js';
 await connectMongo();
 
