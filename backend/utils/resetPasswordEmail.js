@@ -8,7 +8,7 @@ export async function sendPasswordResetEmail(user) {
         { expiresIn: "15m" }
     );
     
-    const verifyURL = `${process.env.CLIENT_URL}/reset-password/${token}`;
+    const verifyURL = `${process.env.API_URL}/reset-password/${token}`;
     
     await resend.emails.send({
         from: process.env.EMAIL_FROM,

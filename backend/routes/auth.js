@@ -13,11 +13,8 @@ import { resetPassword } from '../controllers/resetPasswordController.js';
 const authRouter = express.Router();
 
 // Auth routes
-// authRouter.post('/signup', authLimiter, signupValidation);
-// authRouter.post('/login', authLimiter, loginValidation);
-
-authRouter.post('/signup', signupValidation);
-authRouter.post('/login', loginValidation);
+authRouter.post('/signup', authLimiter, signupValidation);
+authRouter.post('/login', authLimiter, loginValidation);
 authRouter.post('/logout', logoutController);
 
 // Email verification

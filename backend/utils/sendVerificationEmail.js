@@ -8,7 +8,7 @@ export async function sendVerificationEmail(user) {
         { expiresIn: "1h" }
     );
     
-    const verifyURL = `${process.env.CLIENT_URL}/auth/verify-email/${token}`;
+    const verifyURL = `${process.env.API_URL}/auth/verify-email/${token}`;
     
     try {
         await resend.emails.send({
