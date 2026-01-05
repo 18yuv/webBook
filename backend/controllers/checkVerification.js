@@ -8,19 +8,19 @@ export async function checkverification(req, res){
 
         const user = await userModel.findById(decoded.id);
         if (!user) {
-            return res.status(400).json({ message: "Invalid verification link" });
+            return res.redirect(`${process.env.CLIENT_URL}/verify-expired`);
         }
 
         if (user.verified) {
-            return res.status(200).json({ message: "Email already verified" });
+            return res.redirect(`${process.env.CLIENT_URL}/verify-success`);
         }
 
         user.verified = true;
         await user.save();
 
-        return res.status(200).json({ message: "Email verified successfully" });
-
+        return res.redirect(`${process.env.CLIENT_URL}/verify-success`);
+        
     } catch (err) {
-        res.status(400).json({ message: "Invalid or Expired Link" });
+        return res.redirect(`${process.env.CLIENT_URL}/verify-expired`);
     }
 }
