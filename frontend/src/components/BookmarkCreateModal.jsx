@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { createBookmark } from "../api/bookmarks.js";
 import toast from "react-hot-toast";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 export default function BookmarkCreateModal({ onClose, onCreated }) {
     const initialForm = { title: "", url: "", description: "", tags: "" };

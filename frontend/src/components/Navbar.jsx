@@ -21,7 +21,7 @@ export default function Navbar() {
     <header className="navbar">
       <div className="navbar-inner">
         {/* Left */}
-        <Link to="/" className="navbar-logo">
+        <Link to= {user ? "/dashboard" : "/"} className="navbar-logo">
           <img src={bookmarkLogo} alt="WebBook" />
           <span>WebBook</span>
         </Link>

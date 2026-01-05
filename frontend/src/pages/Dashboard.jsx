@@ -13,8 +13,12 @@ export default function Dashboard() {
   return (
     <div className="dashboard">
       <header className="dashboard-header">
-        <h1>Bookmarks</h1>
-        <p></p>
+        <div>
+          <h1>Bookmarks</h1>
+          <p className="welcome-message">
+            Welcome! <span>{user.name}</span> (<span>{user.email}</span>)
+          </p>
+        </div>
         <button className="primary" onClick={() => setShowCreate(true)}>
           + Add Bookmark
         </button>
@@ -24,9 +28,6 @@ export default function Dashboard() {
 
       {loading && <p>Loading bookmarks...</p>}
       {error && <p className="error">{error}</p>}
-      <p className="welcome-message">
-        Welcome! <span>{user.name}</span> (<span>{user.email}</span>)
-      </p>
 
       <div className="bookmark-list">
         {!loading && bookmarks.length === 0 && (
