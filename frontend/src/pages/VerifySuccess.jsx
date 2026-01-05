@@ -6,16 +6,16 @@ export default function VerifySuccess() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    toast.success("Email verified successfully!");
     const timer = setTimeout(() => {
       navigate("/login");
     }, 4000);
-
+    
+    toast.success("Email verified successfully!");
     return () => clearTimeout(timer);
   }, [navigate]);
 
   return (
-    <div className="verify-success">
+    <div className="not-found">
       <h1>Email Verified!</h1>
       <h3>Your email has been successfully verified.</h3>
       <p>You'll be redirected to login shortly.</p>

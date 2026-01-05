@@ -9,7 +9,7 @@ import Navbar from "./components/Navbar.jsx";
 import ResetPassword from "./pages/ResetPassword.jsx";
 import SetPassword from "./pages/SetPassword.jsx";
 import VerifySuccess from "./pages/VerifySuccess.jsx";
-import VerifyExpired from "./pages/verifyExpired.jsx";
+import VerifyExpired from "./pages/VerifyExpired.jsx";
 
 function App() {
 
