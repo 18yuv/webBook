@@ -106,6 +106,7 @@ body {
 .bookmark-actions {
   display: flex;
   gap: 8px;
+  cursor: pointer;
 }
 
 .bookmark-actions button {
@@ -116,6 +117,7 @@ body {
 
 button.danger {
   color: var(--danger);
+  cursor: pointer;
 }
 
 .modal-backdrop {

@@ -14,10 +14,10 @@ export default function Dashboard() {
     <div className="dashboard">
       <header className="dashboard-header">
         <div>
-          <h1>Bookmarks</h1>
           <p className="welcome-message">
             Welcome! <span>{user.name}</span> (<span>{user.email}</span>)
           </p>
+          <h1>Bookmarks</h1>
         </div>
         <button className="primary" onClick={() => setShowCreate(true)}>
           + Add Bookmark
