@@ -6,7 +6,8 @@ export default function BookmarkCreateModal({ onClose, onCreated }) {
     const initialForm = { title: "", url: "", description: "", tags: "" };
     const [form, setForm] = useState(initialForm);
     const [error, setError] = useState("");
-    
+    const [isSubmitting, setIsSubmitting] = useState(false)
+
     const hasUnsavedChanges = () => {
         // Check if any form field is different from initial
         return Object.keys(initialForm).some(key => form[key].trim() !== initialForm[key].trim());
@@ -40,6 +41,7 @@ export default function BookmarkCreateModal({ onClose, onCreated }) {
         };
 
         try {
+            setIsSubmitting(true)
             await createBookmark(payload);
             onCreated();
             onClose();
@@ -47,6 +49,8 @@ export default function BookmarkCreateModal({ onClose, onCreated }) {
         } catch (err) {
             toast.error(err.response?.data?.message || "Failed to create bookmark")
             setError(err.response?.data?.message || "Failed to create bookmark");
+        } finally {
+            setIsSubmitting(false)
         }
     }
 
@@ -85,7 +89,9 @@ export default function BookmarkCreateModal({ onClose, onCreated }) {
                     <button type="button" onClick={handleClose}>
                         Cancel
                     </button>
-                    <button className="primary">Save</button>
+                    <button className="primary" type="submit" disabled={isSubmitting}>
+                        {isSubmitting ? (<>Creating...{" "}<FontAwesomeIcon icon={faSpinner} spinPulse /></>) : ("Create")}
+                    </button>
                 </div>
             </form>
         </div>

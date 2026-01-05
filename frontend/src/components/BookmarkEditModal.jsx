@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { updateBookmark } from "../api/bookmarks.js";
 import toast from "react-hot-toast";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 export default function BookmarkEditModal({ bookmark, onClose, onSaved }) {
-    const initialForm = {
+  const initialForm = {
     title: bookmark.title || "",
     url: bookmark.url || "",
     description: bookmark.description || "",
@@ -11,6 +13,7 @@ export default function BookmarkEditModal({ bookmark, onClose, onSaved }) {
   };
   const [form, setForm] = useState(initialForm);
   const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const hasUnsavedChanges = () => {
     return Object.keys(initialForm).some(
@@ -46,7 +49,7 @@ export default function BookmarkEditModal({ bookmark, onClose, onSaved }) {
         : undefined
     };
     try {
-
+      setIsSubmitting(true);
       await updateBookmark(bookmark._id, payload);
       onSaved();
       onClose();
@@ -54,6 +57,8 @@ export default function BookmarkEditModal({ bookmark, onClose, onSaved }) {
     } catch (err) {
       toast.error(err.response?.data?.message || "Failed to Save chages")
       setError(err.response?.data?.message || "Failed to Save chages");
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
@@ -106,8 +111,8 @@ export default function BookmarkEditModal({ bookmark, onClose, onSaved }) {
           <button type="button" onClick={handleClose}>
             Cancel
           </button>
-          <button className="primary" type="submit">
-            Save
+          <button className="primary" type="submit" disabled={isSubmitting}>
+            {isSubmitting ? (<>Saving…{" "}<FontAwesomeIcon icon={faSpinner} spinPulse /></>) : ("Save") }
           </button>
         </div>
       </form>

@@ -24,7 +24,9 @@ export default function Dashboard() {
 
       {loading && <p>Loading bookmarks...</p>}
       {error && <p className="error">{error}</p>}
-      {`Welcome! ${user.name} (${user.email})`}
+      <p className="welcome-message">
+        Welcome! <span>{user.name}</span> (<span>{user.email}</span>)
+      </p>
 
       <div className="bookmark-list">
         {!loading && bookmarks.length === 0 && (

@@ -529,3 +529,35 @@ textarea {
   justify-content: center;
   align-items: center;
 }
+
+.welcome-message {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  margin: 12px 0 20px;
+  padding: 10px 14px;
+
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--primary);
+  border-radius: var(--radius);
+
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+
+  transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+  cursor: default;
+}
+
+.welcome-message:hover {
+  background: var(--secondary);
+  box-shadow: 0 4px 12px rgba(9, 105, 218, 0.12);
+  transform: translateY(-1px);
+}
+
+.welcome-message span {
+  font-weight: 600;
+  color: var(--primary);
+}
