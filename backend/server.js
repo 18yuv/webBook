@@ -27,6 +27,12 @@ app.use(passport.initialize())
 app.use('/auth', authRouter)
 app.use("/bookmarks", bookmarkRouter)
 app.use('/home', homeRouter)
+
+// awakening the server for render (cron job)
+app.get("/api/health", (req, res) => {
+  res.status(200).send("Server is alive!");
+});
+
 app.use((req, res) => {
   return res.status(404).json({message: 'Endpoint not found'})
   }
