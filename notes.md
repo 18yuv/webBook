@@ -1,1 +1,0 @@
-read me and gif and deployment and final tweaks and posts
