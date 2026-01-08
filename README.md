@@ -17,9 +17,9 @@ This project was built as a **practice + portfolio project**, following real-wor
 
 ---
 
-## ✨ Features
+## Features
 
-### 🔐 Authentication & Security
+### Authentication & Security
 - Email & password authentication
 - Google OAuth login (Passport.js)
 - Email verification on signup
@@ -35,7 +35,7 @@ This project was built as a **practice + portfolio project**, following real-wor
 
 ---
 
-### 🔖 Bookmark Management
+### Bookmark Management
 - Create, read, update, delete bookmarks
 - Bookmark fields:
   - Title
@@ -47,7 +47,7 @@ This project was built as a **practice + portfolio project**, following real-wor
 
 ---
 
-### 🔍 Search & Tags
+### Search & Tags
 - Search bookmarks by **title**
 - Search bookmarks by **tags**
 - Combined search logic for fast filtering
@@ -55,7 +55,7 @@ This project was built as a **practice + portfolio project**, following real-wor
 
 ---
 
-### 📧 Email System
+### Email System
 - **Development**: Nodemailer
 - **Production**: Resend email service
 - Custom domain-based email sending
@@ -66,7 +66,7 @@ This project was built as a **practice + portfolio project**, following real-wor
 
 ---
 
-### 🎨 Frontend Experience
+### Frontend Experience
 - Minimal, modern UI
 - Clean branding & logos
 - Toast notifications
@@ -79,7 +79,7 @@ This project was built as a **practice + portfolio project**, following real-wor
 
 ---
 
-### 🚀 Production & Deployment
+### Production & Deployment
 - Backend deployed on **Render**
 - Frontend deployed on **Render**
 - Environment-based configuration
@@ -89,7 +89,7 @@ This project was built as a **practice + portfolio project**, following real-wor
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Frontend
 - React
@@ -112,7 +112,7 @@ This project was built as a **practice + portfolio project**, following real-wor
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```txt
 webbook/
@@ -141,21 +141,21 @@ webbook/
 
 ---
 
-## 🎥 App Preview
+## App Preview
 
 
 
 ---
 
-## 🌐 Live Demo
+## Live Demo
 
-🔗 Live Application
+ Live Application
 
 https://webbook-yuv.onrender.com
 
 ---
 
-## 🎯 Purpose
+## Purpose
 
 WebBook was built as a real-world MERN stack practice project to demonstrate:
 
@@ -169,7 +169,7 @@ WebBook was built as a real-world MERN stack practice project to demonstrate:
 
 This is a project I’m confidently proud to showcase on my CV.
 
-## 👨‍💻 Author
+## Author
 
 Yuvraj Singh
 
